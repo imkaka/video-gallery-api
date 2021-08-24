@@ -2,6 +2,7 @@
 import logging
 
 # django/rest-framework imports
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.utils import timezone
 from django.db.models import Q
 
@@ -29,7 +30,28 @@ class VideoService:
 
     @classmethod
     def search_videos(cls, q: str):
-        return Video.objects.filter(Q(title__contains=q) | Q(description__contains=q))
+        """Use Postgres Full Text Search
+
+        Args:
+            q: keyword to search in title and description
+
+        Returns:
+            QuerySet of matching Videos.
+
+        Note - This won't scale much, if we want proper FTS capability
+        we can use search efficient DB like Elasticsearch.
+        """
+        search_vector = SearchVector("title", weight="A") + SearchVector(
+            "description", weight="B"
+        )
+        search_query = SearchQuery(q)
+        return (
+            Video.objects.annotate(
+                search=search_vector, rank=SearchRank(search_vector, search_query)
+            )
+            .filter(search=search_query)
+            .order_by("-rank")
+        )
 
     @classmethod
     def fetch_store_videos(cls) -> None:
