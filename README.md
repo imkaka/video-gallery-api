@@ -16,6 +16,7 @@ search key(word), store in DB and expose it via APIs.
 3. use docker-compose to run the service
     -
     ```
+    git clone git@github.com:imkaka/video-gallery-api.git
     cd video-gallery-api
 
     docker-compose up -d --build
@@ -30,6 +31,11 @@ search key(word), store in DB and expose it via APIs.
 
 4. How to Test?
     1. Dashboard - `http://localhost:8000/admin/gallery/video/`
+        - To access Dashboard, we need to create a superuser
+        -
+        ```
+        docker-compose exec web python manage.py createsuperuser
+        ```
 
     2. List API (Videos in descending order of published datetime)
         -
@@ -47,9 +53,9 @@ search key(word), store in DB and expose it via APIs.
 
 5. Note - We can stop the celery beat service after sometime otherwise it will keep
 fetching videos and store in DB.
-    - You can change the interval from `CELERY_BEAT_SCHEDULE` config in `setting.py`
+    - You can change the interval in `CELERY_BEAT_SCHEDULE` config of `settings.py`
 
-Example:
+Examples:
 
 1. List API
 
