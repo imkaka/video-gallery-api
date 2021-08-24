@@ -3,6 +3,7 @@ import logging
 
 # django/rest-framework imports
 from django.utils import timezone
+from django.db.models import Q
 
 # project level imports
 from libs.clients.youtube import YoutubeClient
@@ -28,7 +29,7 @@ class VideoService:
 
     @classmethod
     def search_videos(cls, q: str):
-        ...
+        return Video.objects.filter(Q(title__contains=q) | Q(description__contains=q))
 
     @classmethod
     def fetch_store_videos(cls) -> None:

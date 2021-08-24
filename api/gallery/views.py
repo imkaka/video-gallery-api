@@ -25,7 +25,7 @@ logger = logging.getLogger('api')
 
 class VideoGalleryViewSet(GenericViewSet):
     """
-    Generic viewset to for interacting with video gallery.
+    Generic viewset for interacting with video gallery.
     APIs does not support auth for simplicity.
     we can plug in DRF default Token auth eaasily.
     """
