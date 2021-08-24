@@ -6,8 +6,8 @@ search key(word), store in DB and expose it via APIs.
 
 #### Setup Instructions
 
-1. Add your Google Application API Key for Youtube API.
-    - `YOUTUBE_API_KEY` in `.env.dev`
+1. Add your Google Application API Key(s) for Youtube API.
+    - `YOUTUBE_API_KEYS` in `.env.dev`
 
 2. Add your search word against which videos will be fetched
     - `YOUTUBE_SEARCH_KEYWORD` in `.env.dev`
@@ -238,4 +238,4 @@ curl --location --request GET 'localhost:8000/api/v1/video/search/?q=football&pa
 * [ ] Add Tests (currently It has very few services so due to time constraint not added)
 * [ ] Integrate Elasticsearch for Search API
 * [ ] Use cache layer to speed up the API response
-* [ ] Bonus Point - Support multiple API Keys to tackle quota for Youtube API
+* [x] Bonus Point - Support multiple API Keys to tackle quota for Youtube API

@@ -16,6 +16,7 @@ class YoutubeClient:
     def search(
         cls,
         published_after: str,
+        key: str,
         q: str = settings.YOUTUBE_CONFIG['SEARCH_KEYWORD'],
         entity: str='video',
         order: str ='date'
@@ -23,7 +24,7 @@ class YoutubeClient:
         """
         """
         try:
-            with build('youtube', 'v3', developerKey=settings.YOUTUBE_CONFIG['API_KEY']) as youtube:
+            with build('youtube', 'v3', developerKey=key) as youtube:
                 request = youtube.search().list(
                     part='snippet',
                     q=q,
@@ -35,4 +36,4 @@ class YoutubeClient:
                 return request.execute()
         except Exception as e:
             logger.info(f'YoutubeClient error while fetching videos {e}')
-            return None
+            return None  # Generic Exception will also handle quota over error.

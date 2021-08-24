@@ -2,6 +2,7 @@
 import logging
 
 # django/rest-framework imports
+from django.conf import settings
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.utils import timezone
 from django.db.models import Q
@@ -59,9 +60,10 @@ class VideoService:
         Fetch the videos for defined keyword & store it in DB.
         """
         published_after = (timezone.now() - timezone.timedelta(minutes=PUBLISHED_AFTER_MINUTES)).isoformat()
-        video_data = YoutubeClient.search(published_after)
+        video_data = cls.search_using_eligible_api_key(published_after)
 
         if not video_data:
+            logger.warning(f'fetch_store_videos - Fetching data from Youtube Failed')
             return
 
         videos = []
@@ -78,3 +80,21 @@ class VideoService:
 
         # Record this to DB in bulk
         Video.objects.bulk_create(videos)
+
+    @staticmethod
+    def search_using_eligible_api_key(published_after: str):
+        """
+        It will try to itertate over all given keys and try to search
+        and fetch video from youtube API.
+
+        It can live in some helper file as well.
+        """
+        AVAILABLE_KEYS = settings.YOUTUBE_CONFIG['API_KEYS']
+
+        for key in AVAILABLE_KEYS:
+            video_data = YoutubeClient.search(published_after, key)
+
+            if video_data:
+                return video_data
+
+        return None

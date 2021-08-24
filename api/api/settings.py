@@ -149,6 +149,6 @@ CELERY_BEAT_SCHEDULE = {
 
 # Custom Environment Variables
 YOUTUBE_CONFIG = {
-    'API_KEY': os.environ.get('YOUTUBE_API_KEY'),
+    'API_KEYS': os.environ.get('YOUTUBE_API_KEYS').split(' '),
     'SEARCH_KEYWORD': os.environ.get('YOUTUBE_SEARCH_KEYWORD', 'football'),
 }
