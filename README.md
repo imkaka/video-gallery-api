@@ -232,3 +232,10 @@ curl --location --request GET 'localhost:8000/api/v1/video/search/?q=football&pa
 }
 
 ```
+
+##### Possible Improvements:
+
+* [ ] Add Tests (currently It has very few services so due to time constraint not added)
+* [ ] Integrate Elasticsearch for Search API
+* [ ] Use cache layer to speed up the API response
+* [ ] Bonus Point - Support multiple API Keys to tackle quota for Youtube API
