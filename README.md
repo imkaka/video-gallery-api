@@ -1,4 +1,4 @@
-## Video Gallery API
+## Video Gallery API 🧀
 
 Simple API service to fetch the latest videos from youtube for a
 search key(word), store in DB and expose it via APIs.
@@ -14,7 +14,6 @@ search key(word), store in DB and expose it via APIs.
     - If not given, `'football'` will be used.
 
 3. use docker-compose to run the service
-    -
     ```
     git clone git@github.com:imkaka/video-gallery-api.git
     cd video-gallery-api
